@@ -1,10 +1,14 @@
 {
   description = "flakesrock - the coolest flake in town";
 
-  inputs = { };
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+  };
 
   outputs = inputs: {
     truth = builtins.toFile "flakes-desc" "totally rad";
+
+    packages.x86_64-linux.default = inputs.nixpkgs.legacyPackages.x86_64-linux.hello;
 
     lib = {
       /* Conditionally trace the supplied message, based on a predicate.a
