@@ -10,6 +10,16 @@
 
     packages.x86_64-linux.default = inputs.nixpkgs.legacyPackages.x86_64-linux.hello;
 
+    nixosConfigurations.default = inputs.nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        ({ pkgs, ... }: {
+          boot.loader.systemd-boot.enable = true;
+          fileSystems."/".device = "/dev/disk/by-label/bogus";
+        })
+      ];
+    };
+
     lib = {
       /* Conditionally trace the supplied message, based on a predicate.a
 
